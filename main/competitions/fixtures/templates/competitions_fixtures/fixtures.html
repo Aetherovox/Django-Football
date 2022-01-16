@@ -1,0 +1,17 @@
+{% extends "competitions/base.html" %}
+{% block content %}
+    {% for fix in fixtures %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+
+            </div>
+              <h2>
+                  <a class="article-title" href="{% url 'fixtures-detail' comp.id %}">
+                      {{ fix.team_h }} {{fix.kickoff_time}}  {{fix.team_a}}
+                  </a>
+              </h2>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

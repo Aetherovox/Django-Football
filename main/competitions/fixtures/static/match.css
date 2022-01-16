@@ -1,0 +1,832 @@
+@use "sass:math";
+
+.match-row {
+  position: relative;
+  border-top: 1px solid $match-row-divider;
+  background-color: $elevation01--light;
+
+  .matches-list & {
+    @include card-shadow();
+  }
+
+  // MATCH UNIT CORE
+  .match-row_match {
+    position: relative;
+    width: 70%;
+    margin: 0 auto;
+
+    @include screen-phone-min() {
+      width: 55%;
+      margin-left: 30%;
+    }
+
+    @include screen-desktop-min() {
+      width: 60%;
+    }
+
+    .match-row_related-match {
+      display: none;
+    }
+
+    &.match-fake {
+      padding: 20px 0;
+    }
+
+    // Elements layout
+    .team-away,
+    .team-home {
+      position: relative;
+      width: 36%;
+      height: $matchunit-flag-size-small;
+
+      @include screen-tablet-min() {
+        width: 38%;
+        height: $matchunit-flag-size-base;
+      }
+
+      @include screen-desktop-lg-min() {
+        height: $matchunit-flag-size-large;
+      }
+
+      // Fake team
+      .fake-logo {
+        width: $matchunit-flag-size-small;
+        height: $matchunit-flag-size-small;
+
+        @include screen-tablet-min() {
+          width: $matchunit-flag-size-base;
+          height: $matchunit-flag-size-base;
+        }
+
+        @include screen-desktop-lg-min() {
+          width: $matchunit-flag-size-large;
+          height: $matchunit-flag-size-large;
+        }
+      }
+
+      &:not(.is-club) .fake-logo {
+        border-radius: 50%;
+        background-color: $gray-light;
+      }
+    }
+
+    .match--score {
+      position: relative;
+      float: left;
+      width: 28%;
+      font-size: $match-row_big-font;
+      line-height: $matchunit-flag-size-small;
+
+      @include screen-tablet-min() {
+        width: 24%;
+        font-size: $match-row_large-font;
+        line-height: $matchunit-flag-size-base;
+      }
+      @include screen-desktop-lg-min() {
+        line-height: $matchunit-flag-size-large;
+      }
+
+      .match--score_score {
+        font-size: $match-row_big-font;
+        font-family: $font-comp-regular;
+        line-height: 1;
+        padding: 3px;
+        @include screen-tablet-min() {
+          font-size: $match-row_large-font;
+        }
+      }
+      .match--score_time {
+        color: $gray-dark;
+        font-size: $match-row_medbig-font;
+        @include screen-tablet-min() {
+          font-size: $match-row_big-font;
+        }
+      }
+    }
+
+    .match--minute,
+    .match-row_agg-score-live,
+    .match-row_match-status {
+      font-size: 10.7px;
+    }
+
+    // Flags, logos, names, codes
+    .club-logo,
+    .fake-logo,
+    .team-flag {
+      position: absolute;
+      top: 0;
+    }
+
+    .team-flag {
+      @include flagIcon($matchunit-flag-size-small);
+
+      @include screen-tablet-min() {
+        @include flagIcon($matchunit-flag-size-base);
+      }
+
+      @include screen-desktop-lg-min() {
+        @include flagIcon($matchunit-flag-size-large);
+      }
+    }
+
+    .club-logo {
+      @include logoSize($matchunit-flag-size-small);
+
+      @include screen-tablet-min() {
+        @include logoSize($matchunit-flag-size-base);
+      }
+
+      @include screen-desktop-lg-min() {
+        @include logoSize($matchunit-flag-size-large);
+      }
+    }
+
+    .team-name {
+      @include position(absolute, 50%, 0, auto, 0);
+      @include translate(0, -50%);
+      display: block;
+
+      .team-name {
+        width: calc(100% - #{$matchunit-flag-size-small});
+
+        @include screen-tablet-min() {
+          width: calc(100% - #{$matchunit-flag-size-base});
+        }
+
+        @include screen-desktop-lg-min() {
+          width: calc(100% - #{$matchunit-flag-size-large});
+        }
+      }
+    }
+
+    .team-home {
+      float: left;
+      text-align: right;
+
+      .club-logo,
+      .fake-logo,
+      .team-flag {
+        right: 0;
+      }
+
+      .team-name {
+        right: $matchunit-flag-size-small;
+        padding-right: 5px;
+
+        @include screen-tablet-min() {
+          right: $matchunit-flag-size-base;
+          padding-right: 10px;
+        }
+
+        @include screen-desktop-lg-min() {
+          right: $matchunit-flag-size-large;
+        }
+      }
+    }
+
+    .team-away {
+      float: right;
+      text-align: left;
+
+      .club-logo,
+      .fake-logo,
+      .team-flag {
+        left: 0;
+      }
+
+      .team-name {
+        left: $matchunit-flag-size-small;
+        padding-left: 5px;
+
+        @include screen-tablet-min() {
+          left: $matchunit-flag-size-base;
+          padding-left: 10px;
+        }
+
+        @include screen-desktop-lg-min() {
+          left: $matchunit-flag-size-large;
+        }
+      }
+    }
+
+    // Live match minute
+    .match--minute {
+      position: absolute;
+      left: 50%;
+      @include translate(-50%, 0);
+      text-align: center;
+      line-height: 1;
+    }
+
+    // Status
+    .agg-score-live,
+    .lineups,
+    .match--score > span,
+    .match-status-aggr,
+    .match-status-rw,
+    .match-status-type {
+      display: none;
+    }
+
+    // Additional status
+    .match-row_status {
+      clear: both;
+      text-align: center;
+      @include clearfix();
+    }
+
+    .match-row_match-status {
+      color: $graygray;
+      margin-top: 6px;
+      line-height: 0.8;
+
+      @include screen-desktop-min() {
+        display: block;
+      }
+
+      &.match-row_match-status-abbr {
+        display: none;
+      }
+    }
+
+    [class^='match-status-'] {
+      margin: 5px 0;
+    }
+  }
+
+  // Wrapper link
+  .match-row_link {
+    display: block;
+    padding: 10px 0;
+    color: $text-color;
+    @include clearfix();
+
+    &:hover {
+      background-color: $gray-lighter;
+    }
+  }
+
+  // Additional info
+  .match-row_info {
+    line-height: 1.2;
+    font-size: $match-row_small-font;
+
+    @include screen-phone-min() {
+      position: absolute;
+      top: 50%;
+      @include translate(0, -50%);
+      width: 30%;
+    }
+
+    @include screen-desktop-min() {
+      left: math.div($grid-gutter-width, 3);
+    }
+
+    @include screen-desktop-lg-min() {
+      font-size: $match-row_regular-font;
+    }
+  }
+
+  &.match-groupStage .match-row_info {
+    padding-left: $matchunit-flag-size-base + math.div($grid-gutter-width, 3);
+
+    @include screen-tablet-min() {
+      padding-left: $matchunit-flag-size-large + math.div($grid-gutter-width, 3);
+    }
+  }
+
+  .friendly-name {
+    display: none;
+  }
+
+  &.match-friendly {
+    .friendly-name {
+      display: inline-block;
+    }
+
+    .round-name {
+      display: none;
+    }
+  }
+
+  .long-match-date {
+    color: $long-match-date-color;
+
+    @include screen-desktop-lg-min() {
+      float: left;
+    }
+  }
+
+  .round-name {
+    display: none;
+
+    @include screen-phone-min() {
+      display: block;
+      position: static;
+    }
+  }
+
+  .match-location {
+    position: absolute;
+    top: 50%;
+    @include translate(0, -50%);
+    color: $match-info-color;
+
+    @include screen-phone-min() {
+      position: static;
+      top: auto;
+      @include translate(0, 0);
+    }
+
+    .match-location_stadium {
+      display: none;
+
+      @include screen-desktop-min() {
+        display: inline;
+      }
+
+      &:after {
+        content: ',';
+      }
+    }
+
+    .match-location_venue {
+      display: none;
+
+      @include screen-phone-min() {
+        display: inline;
+      }
+    }
+  }
+
+  // Group btn
+  .match-row_group {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    @include translate(0, -50%);
+    width: $matchunit-flag-size-base;
+    height: $matchunit-flag-size-base;
+    border: 1px solid $btn-inverse-border;
+    border-radius: 50%;
+    text-align: center;
+    color: $btn-inverse-color;
+    font-size: $match-row_small-font;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background-color: $btn-inverse-bg-hover;
+      border-color: $btn-inverse-border;
+      color: $btn-inverse-hover;
+      overflow: visible;
+    }
+
+    @include screen-tablet-min() {
+      width: $matchunit-flag-size-large;
+      height: $matchunit-flag-size-large;
+    }
+
+    @include screen-desktop-min() {
+      left: math.div($grid-gutter-width, 3);
+    }
+
+    .match-group {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include translate(-50%, -50%);
+    }
+
+    .group-label {
+      display: none;
+
+      @include screen-tablet-min() {
+        display: block;
+        padding-top: 3px;
+      }
+    }
+
+    .group-name {
+      display: block;
+    }
+  }
+
+  // Highlights btn
+  .match-row_hl {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    @include translate(0, -50%);
+    width: 40px;
+    height: 40px;
+    border: 1px solid $btn-inverse-border;
+    border-radius: 50%;
+    text-align: center;
+    color: $btn-inverse-color;
+    line-height: 42px;
+    font-size: $match-row_big-font;
+
+    @include screen-desktop-min() {
+      right: math.div($grid-gutter-width, 3);
+    }
+
+    &:hover {
+      background-color: $btn-inverse-bg-hover;
+      border-color: $btn-inverse-border;
+      color: $btn-inverse-hover;
+    }
+
+    &.video-available {
+      display: block;
+    }
+
+    [class*=' icon-'],
+    [class^='icon-'] {
+      margin: 0;
+    }
+  }
+
+  // Fake team names
+  //&.match-fake { }
+  .match-row_penalty-score-live {
+    display: block;
+    text-align: center;
+    clear: both;
+  }
+
+  //////////////////////////////
+  //STYLE STATUS BASED
+  //////////////////////////////
+  // Upcoming
+  &[data-status='Upcoming'] {
+    .match--score .match--score_time {
+      display: inline-block;
+    }
+
+    .lineups {
+      position: relative;
+      padding: 5px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-top: 3px;
+      background-color: $live;
+      color: $gray;
+    }
+
+    .match--score {
+      .match--score_score {
+        display: none !important;
+      }
+    }
+
+    .match-row_related-match {
+      display: block;
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      top: -14px;
+      color: $graygray;
+
+      @include screen-tablet-min() {
+        top: -6px;
+      }
+
+      @include screen-desktop-min() {
+        font-size: $Font-size_XS;
+        top: -10px;
+      }
+    }
+  }
+
+  //////////////////////////////
+  // Finished
+  &[data-status='Finished'] {
+    .match--score .match--score_score {
+      display: inline-block;
+    }
+
+    .match-status-aggr,
+    .match-status-rw {
+      display: inline;
+    }
+
+    .match--score {
+      color: $black;
+    }
+
+    .match-row_agg-score-live,
+    .match-row_penalty,
+    .match-row_penalty-score-live {
+      display: none;
+    }
+
+    /*BROADCASTERS BASE STYLE*/
+    .broadcasters-wrapper {
+      display: none;
+    }
+  }
+
+  //////////////////////////////
+  // Live
+  &[data-status='Live'] {
+    .agg-score-live,
+    .match--score .match--score_score {
+      display: inline-block;
+    }
+
+    .match--score .match--minute {
+      display: block;
+    }
+
+    .match--score .match--score_score {
+      font-family: $mu-horizontal-goals-font-family;
+    }
+
+    .match--score .match--score_score,
+    .penalty-result {
+      border-radius: 2px;
+    }
+
+    .penalty-result {
+      padding: 2px;
+    }
+
+    .penalty-score {
+      display: none;
+    }
+
+    .match--score .match--score_score,
+    .penalty-result,
+    .penalty-score-live {
+      background-color: $live;
+      color: $gray;
+    }
+
+    .penalty-score-live {
+      padding: 2px;
+      border-radius: 2px;
+
+      &:empty {
+        display: none;
+      }
+    }
+
+    //////////////////////////////
+    // Phase Penalty
+    //////////////////////////////
+    &[data-phase='PENALTY'] {
+      .match-status-phases {
+        display: none;
+      }
+
+      .match--score .match--score_score {
+        background-color: transparent;
+      }
+    }
+  }
+
+  //////////////////////////////
+  // Suspended
+  &[data-status='Suspended'] {
+    .match--score .match--score_score {
+      display: inline-block;
+    }
+  }
+
+  //////////////////////////////
+  // Abandoned
+  &[data-status='Abandoned'] {
+    .match--score .match--score_score {
+      display: inline-block;
+    }
+
+    .match-status-aggr,
+    .match-status-rw {
+      display: inline;
+    }
+  }
+
+  //////////////////////////////
+  // Postponed
+  &[data-status='Postponed'] {
+    .match--score .match--score_null {
+      display: inline-block;
+    }
+
+    .match--score .match--score_score {
+      display: none;
+    }
+
+    .match-row_related-match {
+      display: block;
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      top: -14px;
+      font-size: 10.7px;
+
+      @include screen-tablet-min() {
+        top: -6px;
+      }
+
+      @include screen-desktop-min() {
+        font-size: $Font-size_XS;
+        top: -10px;
+      }
+    }
+  }
+
+  //////////////////////////////
+  // Canceled
+  &[data-status='Canceled'] {
+    .match--score .match--score_null {
+      display: inline-block;
+    }
+
+    .match--score .match--score_score {
+      display: none;
+    }
+
+    .match-row_related-match {
+      display: block;
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      top: -14px;
+      font-size: 10.7px;
+
+      @include screen-tablet-min() {
+        top: -6px;
+      }
+
+      @include screen-desktop-min() {
+        font-size: $Font-size_XS;
+        top: -10px;
+      }
+    }
+  }
+
+  //////////////////////////////
+  // Live reporter
+  .live-reporter-signal {
+    text-transform: uppercase;
+    font-size: $Font-size_S;
+    margin: 10px 0;
+    text-align: center;
+
+    @include screen-tablet-min() {
+      margin: 20px 0;
+    }
+
+    .reporting-bulb {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: $live;
+      margin: 0 3px;
+
+      @include screen-tablet-min() {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+
+  .match-row_broadcaster {
+    line-height: 1.5;
+
+    &_icon {
+      margin-right: 3px;
+    }
+
+    .match-row_broadcaster_label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding-top: 6px;
+
+      @include screen-desktop-min() {
+        padding-top: 15px;
+      }
+
+      .sep {
+        margin-right: 3px;
+      }
+
+      a {
+        color: $link-color;
+
+        &:hover {
+          color: $link-hover-color;
+        }
+      }
+    }
+
+    .match-row_broadcaster_icon {
+      &:after {
+        content: ':';
+      }
+    }
+  }
+}
+
+//   ***********************************************************************
+//   END MATCH UNIT
+//   ***********************************************************************
+//HIDDEN MATCHES
+[class^='hidden-matches-'] {
+  display: none;
+
+  .match-row_group {
+    display: none;
+  }
+
+  .match-row--horizontal.match-finalTrn.match-groupStage .match-row_info {
+    padding-left: 0;
+  }
+}
+
+.with-location .match-row {
+  &.match-groupStage .match-row_info {
+    padding-left: 0;
+
+    @include screen-phone-min() {
+      padding-left: $matchunit-flag-size-base + math.div($grid-gutter-width, 3);
+    }
+
+    @include screen-tablet-min() {
+      padding-left: $matchunit-flag-size-large + math.div($grid-gutter-width, 3);
+    }
+  }
+
+  .match-row_info {
+    position: static;
+    top: auto;
+    @include translate(0, 0);
+    width: auto;
+    font-size: $Font-size_S;
+
+    @include screen-tablet-min() {
+      position: absolute;
+      top: 50%;
+      @include translate(0, -50%);
+      width: 23%;
+      font-size: $match-row_small-font;
+    }
+
+    @include screen-desktop-lg-min() {
+      font-size: $match-row_regular-font;
+    }
+  }
+
+  .match-location {
+    position: static;
+    top: auto;
+    @include translate(0, 0);
+    margin: -8px 0 7px;
+    text-align: center;
+
+    @include screen-tablet-min() {
+      margin: 0;
+      text-align: left;
+    }
+
+    .match-location_stadium {
+      display: inline;
+
+      &:after {
+        content: ',';
+      }
+    }
+
+    .match-location_venue {
+      display: inline;
+    }
+  }
+}
+
+// TEMP WORKAROUND TO KEEP THE LEGACY HL ICON ON MATCHES LIST (FIXTURE & RESULT, STANDINGS,...)
+.matches-list,
+.group-container {
+  .mu__highlights {
+    .icon-highlights {
+      display: inline-block;
+      // reset sass HL icon
+      background-image: none;
+      width: auto;
+      height: auto;
+
+      &:before {
+        display: block;
+        content: '\e908';
+      }
+    }
+  }
+}

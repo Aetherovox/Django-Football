@@ -1,0 +1,15 @@
+{% extends "competitions/base.html" %}
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <h2 class="mr-2">{{ object.title }}</h2>
+          <small class="text-muted">{{ object.date_started|date:"F d, Y" }}</small>
+        </div>
+
+        <p class="article-content">{{ object.participant }}</p>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{%url 'competition-update' object.id%}">Join</a>
+
+      </div>
+    </article>
+{% endblock content %}

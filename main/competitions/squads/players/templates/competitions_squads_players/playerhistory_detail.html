@@ -1,0 +1,31 @@
+{% extends "competitions_squads_players/base.html" %}
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+          <div class="article-content">
+              <h2 class = "mr-2">{{ object.player.second_name }}, {{ object.player.first_name }}</h2>
+          </div>
+          <h2 class="mr-2">Season {{object.season_name }}</h2>
+          <h2 class="mr-2">Total Points {{object.total_points }}</h2>
+          <h2 class="mr-2">Starting Cost {{object.start_cost }}</h2>
+          <h2 class="mr-2">Ending Cost {{object.end_cost }}</h2>
+          <h2 class="mr-2">Minutes Played {{object.minutes }}</h2>
+          <h2 class="mr-2">Goals Scored {{object.goals_scored }}</h2>
+          <h2 class="mr-2">Assists {{object.assists }}</h2>
+          <h2 class="mr-2">Clean Sheets {{object.clean_sheets }}</h2>
+          <h2 class="mr-2">Goals Conceded {{object.goals_conceded }}</h2>
+          <h2 class="mr-2">Own Goals {{object.own_goals }}</h2>
+          <h2 class="mr-2">Penalties Saved {{object.penalties_saved }}</h2>
+          <h2 class="mr-2">Penalties Missed {{object.penalties_missed }}</h2>
+          <h2 class="mr-2">Yellow Cards {{object.yellow_cards }}</h2>
+          <h2 class="mr-2">Red Cards {{object.red_cards }}</h2>
+          <h2 class="mr-2">Saves {{object.saves }}</h2>
+          <h2 class="mr-2">Bonus {{object.bonus }}</h2>
+          <h2 class="mr-2">BPS {{object.bps }}</h2>
+          <h2 class="mr-2">Influence {{object.influence }}</h2>
+          <h2 class="mr-2">Creativity {{object.creativity }}</h2>
+          <h2 class="mr-2">Threat {{object.threat }}</h2>
+          <h2 class="mr-2">ICT Index {{object.ict_index }}</h2>
+         </div>
+    </article>
+{% endblock content %}

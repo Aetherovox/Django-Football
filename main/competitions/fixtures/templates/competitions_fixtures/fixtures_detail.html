@@ -1,0 +1,15 @@
+{% extends "fixtures/base.html" %}
+{% block content %}
+    <article class="media content-section">
+      <div class="media-body">
+        <div class="article-metadata">
+          <h2 class="mr-2">{{ fix.team_h }} {{fix.kickoff_time}}  {{fix.team_a}}</h2>
+          <!small class="text-muted">{{ object.date_started|date:"F d, Y" }}<!/small>
+        </div>
+
+        <p class="article-content"></p>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{%url 'competition-update' object.id%}">Make Predictions</a>
+
+      </div>
+    </article>
+{% endblock content %}

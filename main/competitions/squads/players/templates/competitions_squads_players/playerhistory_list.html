@@ -1,0 +1,14 @@
+{% extends "competitions_squads_players/base.html" %}
+{% block content %}
+    {% for hist in history %}
+        {{hist.season_name}}
+        <article class="media content-section">
+          <div class="media-body">
+            <h2><a class="article-title" href="{% url 'playerhistory_detail' hist.id %}">
+                    {{hist.season_name}}</a></h2>
+          </div>
+        </article>
+
+    {% endfor %}
+
+{% endblock content %}
